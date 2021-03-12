@@ -1,17 +1,37 @@
+import 'react-native-gesture-handler';
 import React from 'react';
-import {StyleSheet, ScrollView, View, ImageBackground} from 'react-native';
-import {bg} from './assets/image';
-import Books from './src/pages/books';
-import Header from './src/pages/topHeader';
+import {StyleSheet, ScrollView, ImageBackground} from 'react-native';
+import {NavigationContainer} from '@react-navigation/native';
+import {createStackNavigator} from '@react-navigation/stack';
 
-const App = () => {
+import {bg} from './assets/image';
+import {Header} from './src/components';
+import {Books, Login} from './src/pages';
+
+const Stack = createStackNavigator();
+
+const HomeScreen = ({navigation}) => {
   return (
     <ImageBackground source={bg} style={styles.image}>
       <ScrollView style={{flex: 1}}>
-        <Header />
+        <Header navigation={navigation} />
         <Books />
       </ScrollView>
     </ImageBackground>
+  );
+};
+
+const App = () => {
+  return (
+    <NavigationContainer>
+      <Stack.Navigator
+        screenOptions={{
+          headerShown: false,
+        }}>
+        <Stack.Screen name="Home" component={HomeScreen} />
+        <Stack.Screen name="Login" component={Login} />
+      </Stack.Navigator>
+    </NavigationContainer>
   );
 };
 

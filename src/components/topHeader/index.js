@@ -1,7 +1,8 @@
 import React from 'react';
 import {logo} from '../../../assets/image';
 import {StyleSheet, View, Text, Image, TouchableOpacity} from 'react-native';
-const Header = () => {
+
+const Header = ({navigation}) => {
   return (
     <View style={styles.header}>
       <Image source={logo} style={{width: 120, height: 50}} />
@@ -14,7 +15,9 @@ const Header = () => {
           style={{
             flex: 1,
           }}></View>
-        <TouchableOpacity style={styles.appButtonContainer}>
+        <TouchableOpacity
+          style={styles.appButtonContainer}
+          onPress={() => navigation.navigate('Login')}>
           <Text style={styles.textButton}>Login</Text>
         </TouchableOpacity>
         <TouchableOpacity style={styles.buttonReg}>
