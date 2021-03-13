@@ -5,7 +5,7 @@ import {StyleSheet, View, Text, Image, TouchableOpacity} from 'react-native';
 const Header = ({navigation}) => {
   return (
     <View style={styles.header}>
-      <Image source={logo} style={{width: 120, height: 50}} />
+      <Image source={logo} style={{width: 120, height: 50, borderRadius: 20}} />
       <View
         style={{
           flex: 1,
@@ -20,7 +20,9 @@ const Header = ({navigation}) => {
           onPress={() => navigation.navigate('Login')}>
           <Text style={styles.textButton}>Login</Text>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.buttonReg}>
+        <TouchableOpacity
+          style={styles.buttonReg}
+          onPress={() => navigation.navigate('Register')}>
           <Text style={styles.textReg}>Register</Text>
         </TouchableOpacity>
       </View>

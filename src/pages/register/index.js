@@ -3,15 +3,15 @@ import {
   View,
   Text,
   Image,
-  TouchableOpacity,
   StyleSheet,
   ImageBackground,
   TextInput,
+  TouchableOpacity,
 } from 'react-native';
 import {useForm, Controller} from 'react-hook-form';
 import {logo, bg} from '../../../assets/image';
 
-const Login = ({navigation}) => {
+const Register = ({navigation}) => {
   const {control, handleSubmit, errors} = useForm();
 
   const onSubmit = (data) => {
@@ -26,9 +26,28 @@ const Login = ({navigation}) => {
           <Image source={logo} style={{borderRadius: 20}} />
         </View>
         <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
-          <Text style={{fontSize: 40}}>Login</Text>
+          <Text style={{fontSize: 40}}>Register</Text>
         </View>
-        <View style={{flex: 1, paddingHorizontal: 20}}>
+        <View style={{flex: 2, paddingHorizontal: 20}}>
+          {errors.fullName && (
+            <Text style={styles.warning}>Name is required.</Text>
+          )}
+          <Controller
+            control={control}
+            render={({onChange, onBlur, value}) => (
+              <TextInput
+                style={styles.form}
+                onBlur={onBlur}
+                onChangeText={(value) => onChange(value)}
+                value={value}
+                placeholder="Name"
+              />
+            )}
+            name="fullName"
+            rules={{required: true}}
+            defaultValue=""
+          />
+
           {errors.email && (
             <Text style={styles.warning}>Email is required.</Text>
           )}
@@ -72,20 +91,11 @@ const Login = ({navigation}) => {
             rules={{required: true, minLength: 8}}
             defaultValue=""
           />
-
           <TouchableOpacity
-            style={styles.buttonLogin}
+            style={styles.buttonReg}
             onPress={handleSubmit((data) => onSubmit(data))}>
-            <Text style={styles.textLogin}>Login</Text>
+            <Text style={styles.textReg}>Register</Text>
           </TouchableOpacity>
-        </View>
-        <View style={{flex: 1, justifyContent: 'center', flexDirection: 'row'}}>
-          <Text style={{fontSize: 20}}>Don't have account ? </Text>
-          <Text
-            style={{fontSize: 20, fontWeight: 'bold'}}
-            onPress={() => navigation.navigate('Register')}>
-            Klik here
-          </Text>
         </View>
       </View>
     </ImageBackground>
@@ -109,7 +119,7 @@ const styles = StyleSheet.create({
     color: '#FF4058',
     fontSize: 15,
   },
-  buttonLogin: {
+  buttonReg: {
     height: 50,
     backgroundColor: '#000',
     borderColor: '#000',
@@ -118,7 +128,7 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     marginTop: 10,
   },
-  textLogin: {
+  textReg: {
     fontSize: 18,
     color: '#fff',
     fontWeight: 'bold',
@@ -127,4 +137,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default Login;
+export default Register;
