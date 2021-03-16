@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useContext} from 'react';
 import {
   View,
   Text,
@@ -10,8 +10,11 @@ import {
 } from 'react-native';
 import {useForm, Controller} from 'react-hook-form';
 import {logo, bg} from '../../../assets/image';
+import {AppContext} from '../../components/context';
 
 const Register = ({navigation}) => {
+  const [state, dispatch] = useContext(AppContext);
+  const isLogin = state.isLogin;
   const {control, handleSubmit, errors} = useForm();
 
   const onSubmit = (data) => {

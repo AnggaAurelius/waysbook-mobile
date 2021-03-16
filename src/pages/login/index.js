@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useContext, useEffect} from 'react';
 import {
   View,
   Text,
@@ -7,18 +7,53 @@ import {
   StyleSheet,
   ImageBackground,
   TextInput,
+  Alert,
 } from 'react-native';
 import {useForm, Controller} from 'react-hook-form';
 import {logo, bg} from '../../../assets/image';
+import {API} from '../../config/axios';
+import {AppContext} from '../../components/context';
 
 const Login = ({navigation}) => {
-  const {control, handleSubmit, errors} = useForm();
+  const [state, dispatch] = useContext(AppContext);
+  // const isLogin = state.isLogin;
+  const {control, handleSubmit, errors, reset} = useForm();
 
-  const onSubmit = (data) => {
-    console.log(data.email);
-    console.log(data.password);
+  const onSubmit = async (data) => {
+    try {
+      const body = JSON.stringify({
+        email: data.email,
+        password: data.password,
+      });
+
+      const config = {
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      };
+
+      const user = await API.post('/login', body, config);
+      const result = user.data.data.user;
+      if (result.role == 'USER') {
+        reset();
+        dispatch({
+          type: 'LOGIN_SUKSES',
+          payload: result,
+        });
+        navigation.navigate('Home');
+      } else {
+        Alert.alert('your credentials are incorrect');
+      }
+    } catch (error) {
+      Alert.alert('your credentials are incorrect..');
+      console.log(error);
+    }
   };
-
+  useEffect(() => {
+    // if (isLogin) {
+    //   navigation.navigate('Home');
+    // }
+  }, []);
   return (
     <ImageBackground source={bg} style={styles.image}>
       <View style={{flex: 1, paddingHorizontal: 30}}>
@@ -38,6 +73,7 @@ const Login = ({navigation}) => {
               <TextInput
                 style={styles.form}
                 onBlur={onBlur}
+                keyboardType="email-address"
                 onChangeText={(value) => onChange(value)}
                 value={value}
                 placeholder="Email"
@@ -72,7 +108,6 @@ const Login = ({navigation}) => {
             rules={{required: true, minLength: 8}}
             defaultValue=""
           />
-
           <TouchableOpacity
             style={styles.buttonLogin}
             onPress={handleSubmit((data) => onSubmit(data))}>
