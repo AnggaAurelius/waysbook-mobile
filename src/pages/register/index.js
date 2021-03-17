@@ -7,19 +7,46 @@ import {
   ImageBackground,
   TextInput,
   TouchableOpacity,
+  Alert,
 } from 'react-native';
 import {useForm, Controller} from 'react-hook-form';
 import {logo, bg} from '../../../assets/image';
 import {AppContext} from '../../components/context';
+import {API, setAuthToken} from '../../config/axios';
 
 const Register = ({navigation}) => {
   const [state, dispatch] = useContext(AppContext);
   const isLogin = state.isLogin;
   const {control, handleSubmit, errors} = useForm();
 
-  const onSubmit = (data) => {
-    console.log(data.email);
-    console.log(data.password);
+  const onSubmit = async (data) => {
+    try {
+      const body = JSON.stringify({
+        email: data.email,
+        password: data.password,
+        fullName: data.fullName,
+      });
+
+      const config = {
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      };
+
+      const user = await API.post('/register', body, config);
+      const result = user.data.data.user;
+
+      dispatch({
+        type: 'LOGIN_SUKSES',
+        payload: result,
+      });
+      setAuthToken(result.token);
+
+      navigation.navigate('Home');
+    } catch (error) {
+      console.log(error);
+      Alert.alert('your credentials are incorrect..');
+    }
   };
 
   return (

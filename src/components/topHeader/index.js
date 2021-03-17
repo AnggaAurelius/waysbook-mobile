@@ -1,11 +1,13 @@
 import React, {useContext} from 'react';
 import {AppContext} from '../../components/context';
-import {logo} from '../../../assets/image';
+import {logo, cart} from '../../../assets/image';
 import {StyleSheet, View, Text, Image, TouchableOpacity} from 'react-native';
 
 const Header = ({navigation}) => {
   const [state] = useContext(AppContext);
   const isLogin = state.isLogin;
+  console.log(state);
+
   return (
     <View style={styles.header}>
       <Image source={logo} style={{width: 120, height: 50, borderRadius: 20}} />
@@ -20,7 +22,16 @@ const Header = ({navigation}) => {
           }}
         />
         {isLogin ? (
-          <View />
+          <>
+            <Image
+              source={cart}
+              style={{width: 40, height: 40, marginRight: 30}}
+            />
+            <Image
+              source={{uri: `${state.user.avatar}`}}
+              style={{width: 45, height: 45, marginRight: 20, borderRadius: 20}}
+            />
+          </>
         ) : (
           <>
             <TouchableOpacity
