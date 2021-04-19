@@ -15,7 +15,7 @@ import {API} from '../../config/axios';
 import {AppContext} from '../../components/context';
 
 const Login = ({navigation}) => {
-  const [state, dispatch] = useContext(AppContext);
+  const [, dispatch] = useContext(AppContext);
   // const isLogin = state.isLogin;
   const {control, handleSubmit, errors, reset} = useForm();
 
@@ -63,7 +63,7 @@ const Login = ({navigation}) => {
         <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
           <Text style={{fontSize: 40}}>Login</Text>
         </View>
-        <View style={{flex: 1, paddingHorizontal: 20}}>
+        <View style={{flex: 2, paddingHorizontal: 20}}>
           {errors.email && (
             <Text style={styles.warning}>Email is required.</Text>
           )}
@@ -113,14 +113,20 @@ const Login = ({navigation}) => {
             onPress={handleSubmit((data) => onSubmit(data))}>
             <Text style={styles.textLogin}>Login</Text>
           </TouchableOpacity>
-        </View>
-        <View style={{flex: 1, justifyContent: 'center', flexDirection: 'row'}}>
-          <Text style={{fontSize: 20}}>Don't have account ? </Text>
-          <Text
-            style={{fontSize: 20, fontWeight: 'bold'}}
-            onPress={() => navigation.navigate('Register')}>
-            Klik here
-          </Text>
+          <View
+            style={{
+              flex: 1,
+              justifyContent: 'center',
+              flexDirection: 'row',
+              marginTop: 20,
+            }}>
+            <Text style={{fontSize: 20}}>Don't have account ? </Text>
+            <Text
+              style={{fontSize: 20, fontWeight: 'bold'}}
+              onPress={() => navigation.navigate('Register')}>
+              Klik here
+            </Text>
+          </View>
         </View>
       </View>
     </ImageBackground>

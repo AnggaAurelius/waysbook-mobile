@@ -6,7 +6,6 @@ import {StyleSheet, View, Text, Image, TouchableOpacity} from 'react-native';
 const Header = ({navigation}) => {
   const [state] = useContext(AppContext);
   const isLogin = state.isLogin;
-  console.log(state);
 
   return (
     <View style={styles.header}>

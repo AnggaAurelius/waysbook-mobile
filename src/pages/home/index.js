@@ -7,8 +7,8 @@ import {Header, Books} from '../../components';
 const HomeScreen = ({navigation}) => {
   return (
     <ImageBackground source={bg} style={styles.image}>
+      <Header navigation={navigation} />
       <ScrollView style={{flex: 1}}>
-        <Header navigation={navigation} />
         <Books />
       </ScrollView>
     </ImageBackground>

@@ -15,8 +15,8 @@ import {AppContext} from '../../components/context';
 import {API, setAuthToken} from '../../config/axios';
 
 const Register = ({navigation}) => {
-  const [state, dispatch] = useContext(AppContext);
-  const isLogin = state.isLogin;
+  const [, dispatch] = useContext(AppContext);
+  // const isLogin = state.isLogin;
   const {control, handleSubmit, errors} = useForm();
 
   const onSubmit = async (data) => {
@@ -126,6 +126,20 @@ const Register = ({navigation}) => {
             onPress={handleSubmit((data) => onSubmit(data))}>
             <Text style={styles.textReg}>Register</Text>
           </TouchableOpacity>
+          <View
+            style={{
+              flex: 1,
+              justifyContent: 'center',
+              flexDirection: 'row',
+              marginTop: 20,
+            }}>
+            <Text style={{fontSize: 20}}>Don't have account ? </Text>
+            <Text
+              style={{fontSize: 20, fontWeight: 'bold'}}
+              onPress={() => navigation.navigate('Login')}>
+              Klik here
+            </Text>
+          </View>
         </View>
       </View>
     </ImageBackground>
